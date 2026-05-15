@@ -20,4 +20,26 @@ public class GlobalExceptionHandler {
                 request.getContextPath()
         ));
     }
+
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(
+            UserAlreadyExistException exception,
+            HttpServletRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(
+                exception.getMessage(),
+                request.getContextPath()
+        ));
+    }
+
+    @ExceptionHandler(AddressNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAddressNotFoundException(
+            AddressNotFoundException exception,
+            HttpServletRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(
+                exception.getMessage(),
+                request.getContextPath()
+        ));
+    }
 }

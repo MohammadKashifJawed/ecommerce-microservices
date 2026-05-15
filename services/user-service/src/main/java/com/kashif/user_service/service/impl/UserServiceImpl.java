@@ -1,6 +1,7 @@
 package com.kashif.user_service.service.impl;
 
 import com.kashif.user_service.dto.UserRequest;
+import com.kashif.user_service.exception.UserAlreadyExistException;
 import com.kashif.user_service.exception.UserNotFoundException;
 import com.kashif.user_service.mapper.UserMapper;
 import com.kashif.user_service.model.User;
@@ -37,6 +38,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse createUser(UserRequest request) {
+        User user = repository.findByEmail(request.getEmail());
+        if (user != null){
+            throw new UserAlreadyExistException("User already exist for this email");
+        }
         return UserMapper.userToUserResponse(
                 repository.save(
                         UserMapper.userRequestToUser(request)
