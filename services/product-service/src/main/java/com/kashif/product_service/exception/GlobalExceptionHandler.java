@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ErrorResponse(
                         exception.getMessage(),
-                        request.getPathInfo()
+                        request.getContextPath()
                 )
         );
     }
@@ -25,6 +25,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductNotExistException.class)
     public ResponseEntity<ErrorResponse> handleProductNotExistException(
             ProductNotExistException exception, HttpServletRequest request
+    ){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ErrorResponse(
+                        exception.getMessage(),
+                        request.getContextPath()
+                )
+        );
+    }
+
+    @ExceptionHandler(ReviewNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleReviewNotFoundException(
+            ReviewNotFoundException exception, HttpServletRequest request
     ){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ErrorResponse(

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -84,10 +85,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponse> getProductsByFilter
-            (String category, String brand, String minPrice, String maxPrice)
+            (Long categoryId, String brand, BigDecimal minPrice, BigDecimal maxPrice)
     {
         return mapper.productListToProductResponseList(
-                repository.filterProducts(category, brand, minPrice, maxPrice)
+                repository.filterProducts(categoryId, brand, minPrice, maxPrice)
         );
     }
 }

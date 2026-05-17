@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @Table(name = "reviews")
 @Entity
-public class Rating {
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

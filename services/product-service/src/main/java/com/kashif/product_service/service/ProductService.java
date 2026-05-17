@@ -3,6 +3,7 @@ package com.kashif.product_service.service;
 import com.kashif.product_service.dto.ProductRequest;
 import com.kashif.product_service.dto.ProductResponse;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
@@ -16,5 +17,5 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    List<ProductResponse> getProductsByFilter(String category, String brand, String minPrice, String maxPrice);
+    List<ProductResponse> getProductsByFilter(Long categoryId, String brand, BigDecimal minPrice, BigDecimal maxPrice);
 }
