@@ -73,17 +73,15 @@ public class ReviewController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<ApiResponse<List<ReviewResponse>>> ilterReviews(
-            @RequestParam(required = false) String productId,
-            @RequestParam(required = false) String userId
+    public ResponseEntity<ApiResponse<List<ReviewResponse>>> filterReviews(
+            @RequestParam(required = false) String productId
     ){
-        Long product = 0L, user = 0L;
+        Long product = 0L;
         if (productId != null) product = Long.parseLong(productId);
-        if (userId != null) user = Long.parseLong(userId);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(
                         "Fetched all reviews",
-                        service.filterReviews(product, user)
+                        service.filterReviews(product)
                 )
         );
     }

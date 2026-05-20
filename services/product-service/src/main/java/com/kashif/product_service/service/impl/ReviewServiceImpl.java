@@ -69,9 +69,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewResponse> filterReviews(Long product, Long user) {
+    public List<ReviewResponse> filterReviews(Long product) {
         return mapper.reviewListToReviewResponseList(
-                repository.filterReviews(product, user)
+                repository.filterReviews(product)
         );
     }
 }

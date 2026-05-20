@@ -14,7 +14,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("""
         SELECT r FROM Review r
         WHERE r.productId = :product
-        OR r.userId = :user
     """)
-    List<Review> filterReviews(@Param("product") Long product, @Param("user") Long user);
+    List<Review> filterReviews(@Param("product") Long product);
 }

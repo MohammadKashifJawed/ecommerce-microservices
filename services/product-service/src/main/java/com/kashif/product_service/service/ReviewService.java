@@ -16,5 +16,5 @@ public interface ReviewService {
 
     void deleteReview(Long id);
 
-    List<ReviewResponse> filterReviews(Long product, Long user);
+    List<ReviewResponse> filterReviews(Long product);
 }
