@@ -42,14 +42,14 @@ public class CartService {
             List<CartItem> items = existingCart.getItems();
             CartItem existingItem = items.stream().filter( // if item exist in existing cart
                     (item) -> {
-                        if (item.getId().equals(cartItem.getId())){
+                        if (item.getProductId().equals(cartItem.getProductId())){
                             if (item.getQuantity() + request.getQuantity() > product.getStock()){
                                 throw new ProductOutOfStockException
                                         ("Product with given quantity not available");
                             }
                             item.setQuantity(item.getQuantity() + request.getQuantity());
-                            item.setPrice(item.getPrice()
-                                    .multiply(BigDecimal.valueOf(request.getQuantity())));
+                            item.setTotalPrice(item.getPrice()
+                                    .multiply(BigDecimal.valueOf(item.getQuantity())));
                             return true;
                         }
                         return false;
@@ -77,24 +77,22 @@ public class CartService {
     public BigDecimal totalCartPrice(List<CartItem> items){
         return items.stream().reduce(
                 BigDecimal.ZERO,
-                (sum, item) -> sum.add(item.getPrice()),
+                (sum, item) -> sum.add(item.getTotalPrice()),
                 BigDecimal::add
         );
     }
 
-    public CartResponse updateCart(CartRequest request, long cartId) {
-        Cart cart = repository.findById(cartId).orElseThrow(
-                () -> new CartNotFoundException("Cart with given id not found")
-        );
+    public CartResponse updateCart(CartRequest request) {
+        Cart cart = repository.findByUserId(request.getUserId());
         List<CartItem> items = cart.getItems().stream().peek(item -> {
-            if(item.getId().equals(request.getProductId())){
+            if(item.getProductId().equals(request.getProductId())){
                 item.setQuantity(request.getQuantity());
-                item.setPrice(item.getPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
+                item.setTotalPrice(item.getPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
             }
         }).collect(Collectors.toCollection(ArrayList::new));
         cart.setTotalPrice(totalCartPrice(items));
         cart.getItems().clear();
-        cart.setItems(items);
+        cart.getItems().addAll(items);
         return cartMapper.cartToCartResponse(repository.save(cart));
     }
 

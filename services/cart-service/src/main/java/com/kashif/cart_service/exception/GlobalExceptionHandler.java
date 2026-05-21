@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
             ProductNotExistException exception,
             HttpServletRequest request
     ){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        return ResponseEntity.status(404).body(
                 new ErrorResponse(
                         exception.getMessage(),
                         request.getContextPath()

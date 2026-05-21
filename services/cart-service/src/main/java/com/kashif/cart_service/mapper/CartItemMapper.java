@@ -16,7 +16,8 @@ public class CartItemMapper {
         return CartItem.builder()
                 .productId(product.getId())
                 .quantity(quantity)
-                .price(product.getPrice().multiply(BigDecimal.valueOf(quantity)))
+                .price(product.getPrice())
+                .totalPrice(product.getPrice().multiply(BigDecimal.valueOf(quantity)))
                 .build();
     }
 
@@ -26,6 +27,7 @@ public class CartItemMapper {
                 .productId(item.getProductId())
                 .quantity(item.getQuantity())
                 .price(item.getPrice())
+                .totalPrice(item.getTotalPrice())
                 .build();
     }
 
@@ -38,6 +40,7 @@ public class CartItemMapper {
                     .productId(item.getProductId())
                     .quantity(item.getQuantity())
                     .price(item.getPrice())
+                    .totalPrice(item.getTotalPrice())
                     .build()
             );
         }

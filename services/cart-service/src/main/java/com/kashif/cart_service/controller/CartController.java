@@ -26,15 +26,12 @@ public class CartController {
         );
     }
 
-    @PutMapping("/{cartId}")
-    public ResponseEntity<ApiResponse<CartResponse>> updateCart(
-            @RequestBody CartRequest request,
-            @PathVariable String cartId
-    ){
+    @PutMapping
+    public ResponseEntity<ApiResponse<CartResponse>> updateCart(@RequestBody CartRequest request){
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(
                         "Cart updated successfully",
-                        service.updateCart(request, Long.parseLong(cartId))
+                        service.updateCart(request)
                 )
         );
     }
