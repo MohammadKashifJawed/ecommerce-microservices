@@ -1,13 +1,13 @@
 server:
-  port: 8081
+  port: 8083
   servlet:
     context-path: /api/v1
 
 spring:
   application:
-    name: user-service
+    name: cart-service
   datasource:
-    url: jdbc:mysql://localhost:3306/user-service?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/cart-service?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
