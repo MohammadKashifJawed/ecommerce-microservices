@@ -97,19 +97,19 @@ public class CartService {
     }
 
 
-    public CartResponse getCart(long cartId) {
-        return cartMapper.cartToCartResponse(
-                repository.findById(cartId).orElseThrow(
-                        () -> new CartNotFoundException("Cart with given id not found")
-                )
-        );
+    public CartResponse getCart(long userId) {
+        Cart cart = repository.findByUserId(userId);
+        if (cart == null){
+            throw new CartNotFoundException("Cart with given id not found");
+        }
+        return cartMapper.cartToCartResponse(cart);
     }
 
-    public void deleteCart(long cartId) {
-        repository.delete(
-                repository.findById(cartId).orElseThrow(
-                        () -> new CartNotFoundException("Cart with given id not found")
-                )
-        );
+    public void deleteCart(long userId) {
+        Cart cart = repository.findByUserId(userId);
+        if (cart == null){
+            throw new CartNotFoundException("Cart with given id not found");
+        }
+        repository.delete(cart);
     }
 }

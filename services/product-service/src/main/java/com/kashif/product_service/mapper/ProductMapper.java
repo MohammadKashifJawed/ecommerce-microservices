@@ -6,6 +6,7 @@ import com.kashif.product_service.exception.CategoryNotExistException;
 import com.kashif.product_service.model.Category;
 import com.kashif.product_service.model.Product;
 import com.kashif.product_service.repository.CategoryRepository;
+import com.kashif.product_service.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,8 @@ public class ProductMapper {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final ReviewMapper reviewMapper;
+    private final ReviewRepository reviewRepository;
 
     public Product productRequestToProduct(ProductRequest request, Long categoryId){
         return Product.builder()
@@ -26,7 +29,6 @@ public class ProductMapper {
                 .price(request.getPrice())
                 .stock(request.getStock())
                 .categoryId(categoryId)
-                .brand(request.getBrand())
                 .imageUrl(request.getImageUrl())
                 .build();
     }
@@ -41,10 +43,14 @@ public class ProductMapper {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .stock(product.getStock())
-                .category(categoryMapper.categoryToCategoryResponse(category))
-                .brand(product.getBrand())
-                .imageUrl(product.getImageUrl())
-                .build();
+                .category(
+                        categoryMapper.categoryToCategoryResponse(category)
+                ).imageUrl(product.getImageUrl())
+                .reviews(
+                        reviewMapper.reviewListToReviewResponseList(
+                                reviewRepository.filterReviews(product.getId())
+                        )
+                ).build();
     }
 
     public List<ProductResponse> productListToProductResponseList(List<Product> productList){
@@ -61,9 +67,12 @@ public class ProductMapper {
                             .price(product.getPrice())
                             .stock(product.getStock())
                             .category(categoryMapper.categoryToCategoryResponse(category))
-                            .brand(product.getBrand())
                             .imageUrl(product.getImageUrl())
-                            .build()
+                            .reviews(
+                                    reviewMapper.reviewListToReviewResponseList(
+                                            reviewRepository.filterReviews(product.getId())
+                                    )
+                            ).build()
             );
         }
         return responses;

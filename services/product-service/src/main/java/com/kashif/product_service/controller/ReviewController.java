@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/review")
+@RequestMapping("/api/v1/review")
 public class ReviewController {
 
     private final ReviewService service;
@@ -72,16 +72,14 @@ public class ReviewController {
         );
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/filter/{id}")
     public ResponseEntity<ApiResponse<List<ReviewResponse>>> filterReviews(
-            @RequestParam(required = false) String productId
+            @PathVariable(name = "id") String productId
     ){
-        Long product = 0L;
-        if (productId != null) product = Long.parseLong(productId);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(
                         "Fetched all reviews",
-                        service.filterReviews(product)
+                        service.filterReviews(Long.parseLong(productId))
                 )
         );
     }

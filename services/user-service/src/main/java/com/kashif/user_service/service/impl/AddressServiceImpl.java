@@ -51,8 +51,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressResponse getAddressById(Long addressId) {
-        Address address = repository.findById(addressId).orElseThrow(
+    public AddressResponse getAddressById(Long addressId, Long userId) {
+        Address address = repository.findByIdAndUserId(addressId, userId).orElseThrow(
                 () -> new AddressNotFoundException("Address with given id not found")
         );
         return mapper.addressToAddressResponse(address);

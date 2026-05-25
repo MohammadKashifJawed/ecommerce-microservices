@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/api/v1/address")
 @RequiredArgsConstructor
 public class AddressController {
 
@@ -40,12 +40,15 @@ public class AddressController {
         );
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<AddressResponse>> getAddress(@PathVariable String id){
+    @GetMapping
+    public ResponseEntity<ApiResponse<AddressResponse>> getAddress(
+            @RequestParam("addressId") String addressId,
+            @RequestParam("userId") String userId
+    ){
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(
                         "Address fetched successfully",
-                        service.getAddressById(Long.valueOf(id))
+                        service.getAddressById(Long.valueOf(addressId), Long.parseLong(userId))
                 )
         );
     }

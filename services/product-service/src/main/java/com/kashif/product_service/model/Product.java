@@ -16,12 +16,12 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
+
+    @Lob
     private String description;
     private BigDecimal price;
     private Integer stock;
     private Long categoryId;
-    private String brand;
     private String imageUrl;
 }

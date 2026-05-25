@@ -1,0 +1,59 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: product-service
+          uri: lb://product-service        # ← back to lb:// now that eureka is working
+          predicates:
+            - Path=/api/v1/product,/api/v1/product/**
+
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/v1/cart,/api/v1/cart/**
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v1/user,/api/v1/user/**
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/v1/order,/api/v1/order/**
+
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 30
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    hostname: 127.0.0.1
+    instance-id: ${spring.application.name}:127.0.0.1:${server.port}
+
+logging:
+  level:
+    org.springframework.cloud.gateway: WARN   # ← WARN instead of DEBUG, cleaner console
+    com.netflix.discovery: WARN
+    com.netflix.eureka: WARN
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true

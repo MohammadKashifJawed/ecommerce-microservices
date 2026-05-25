@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 public class CartController {
 
@@ -36,19 +36,19 @@ public class CartController {
         );
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<CartResponse>> getCartById(@PathVariable String id){
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<CartResponse>> getCartById(@PathVariable String userId){
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(
                         "Cart fetched successfully",
-                        service.getCart(Long.parseLong(id))
+                        service.getCart(Long.parseLong(userId))
                 )
         );
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> deleteCart(@PathVariable String id){
-        service.deleteCart(Long.parseLong(id));
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<ApiResponse<String>> deleteCart(@PathVariable String userId){
+        service.deleteCart(Long.parseLong(userId));
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(
                 new ApiResponse<>(
                         "Cart deleted successfully",

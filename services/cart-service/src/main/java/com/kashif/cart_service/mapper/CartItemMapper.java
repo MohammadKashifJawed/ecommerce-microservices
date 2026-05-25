@@ -15,6 +15,7 @@ public class CartItemMapper {
     public CartItem productToCartItem(ProductResponse product, int quantity){
         return CartItem.builder()
                 .productId(product.getId())
+                .imageUrl(product.getImageUrl())
                 .quantity(quantity)
                 .price(product.getPrice())
                 .totalPrice(product.getPrice().multiply(BigDecimal.valueOf(quantity)))
@@ -25,6 +26,7 @@ public class CartItemMapper {
         return CartItemResponse.builder()
                 .id(item.getId())
                 .productId(item.getProductId())
+                .imageUrl(item.getImageUrl())
                 .quantity(item.getQuantity())
                 .price(item.getPrice())
                 .totalPrice(item.getTotalPrice())
@@ -38,6 +40,7 @@ public class CartItemMapper {
                     CartItemResponse.builder()
                     .id(item.getId())
                     .productId(item.getProductId())
+                    .imageUrl(item.getImageUrl())
                     .quantity(item.getQuantity())
                     .price(item.getPrice())
                     .totalPrice(item.getTotalPrice())

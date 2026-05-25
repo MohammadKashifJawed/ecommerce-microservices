@@ -1,7 +1,5 @@
 server:
   port: 8081
-  servlet:
-    context-path: /api/v1
 
 spring:
   application:
@@ -39,4 +37,5 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
-    instance-id: ${spring.application.name}:${server.port}
+    hostname: 127.0.0.1
+    instance-id: ${spring.application.name}:127.0.0.1:${server.port}

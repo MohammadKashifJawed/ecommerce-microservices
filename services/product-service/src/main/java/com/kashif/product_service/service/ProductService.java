@@ -17,5 +17,5 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    List<ProductResponse> getProductsByFilter(Long categoryId, String brand, BigDecimal minPrice, BigDecimal maxPrice);
+    List<ProductResponse> getProductsByFilter(Long categoryId, BigDecimal minPrice, BigDecimal maxPrice);
 }

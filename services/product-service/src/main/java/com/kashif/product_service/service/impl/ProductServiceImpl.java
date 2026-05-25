@@ -51,7 +51,6 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
-        product.setBrand(request.getBrand());
         product.setImageUrl(request.getImageUrl());
         product.setCategoryId(category.getId());
         return mapper.productToProductResponse(
@@ -85,10 +84,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponse> getProductsByFilter
-            (Long categoryId, String brand, BigDecimal minPrice, BigDecimal maxPrice)
+            (Long categoryId, BigDecimal minPrice, BigDecimal maxPrice)
     {
         return mapper.productListToProductResponseList(
-                repository.filterProducts(categoryId, brand, minPrice, maxPrice)
+                repository.filterProducts(categoryId, minPrice, maxPrice)
         );
     }
 }

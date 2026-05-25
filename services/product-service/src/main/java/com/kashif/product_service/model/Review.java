@@ -18,7 +18,6 @@ public class Review {
     private Long productId;
     private Long userId;
     private Double rating;
-
     @Column(length = 500)
     private String comment;
 }

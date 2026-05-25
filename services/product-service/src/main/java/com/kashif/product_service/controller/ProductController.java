@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/v1/product")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -64,24 +64,19 @@ public class ProductController {
     @GetMapping("/filter")
     public ResponseEntity<ApiResponse<List<ProductResponse>>> filterProducts(
             @RequestParam(required = false) String categoryId,
-            @RequestParam(required = false) String brand,
             @RequestParam(required = false) String minPrice,
             @RequestParam(required = false) String maxPrice
     ){
-        Long category = 0L;
+        Long category = null;
         BigDecimal min = null, max = null;
         if (categoryId != null) category = Long.valueOf(categoryId);
-        else category = null;
         if (minPrice != null) min = BigDecimal.valueOf(Double.parseDouble(minPrice));
-        else min = null;
         if (maxPrice != null) max = BigDecimal.valueOf(Double.parseDouble(maxPrice));
-        else max = null;
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(
                         "Filter applied",
                         service.getProductsByFilter(
                                 category,
-                                brand,
                                 min,
                                 max
                         )

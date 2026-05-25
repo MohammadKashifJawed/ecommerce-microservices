@@ -10,7 +10,7 @@ public interface AddressService {
 
     AddressResponse updateAddress(AddressRequest request, Long addressId);
 
-    AddressResponse getAddressById(Long aLong);
+    AddressResponse getAddressById(Long addressId , Long userId);
 
     List<AddressResponse> getAllAddress(Long userId);
 

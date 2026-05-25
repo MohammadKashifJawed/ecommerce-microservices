@@ -15,13 +15,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("""
         SELECT p FROM Product p
         WHERE (p.categoryId IS NULL OR p.categoryId = :category)
-        OR (p.brand IS NULL OR p.brand = :brand)
         OR (p.price IS NULL OR p.price >= :minPrice)
         OR (p.price IS NULL OR p.price <= :maxPrice)
     """)
     List<Product> filterProducts(
             @Param("category") Long category,
-            @Param("brand") String brand,
             @Param("minPrice") BigDecimal minPrice,
             @Param("maxPrice") BigDecimal maxPrice
     );
